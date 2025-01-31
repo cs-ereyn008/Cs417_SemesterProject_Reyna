@@ -29,9 +29,6 @@ project-root/
 Clone the repository and install dependencies:
 pip install numpy
 
-
-## Usage
-
 ## Parsing Temperature Data 
 
 Run the main script with an input data file:

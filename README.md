@@ -1,4 +1,4 @@
-#CPU Temperature Analysis Project
+##CPU Temperature Analysis Project
 
 
 Emily Reyna
@@ -19,7 +19,7 @@ project-root/
 │-- least_squares.py          # Computes least squares approximation
 │-- README.md                 # Project documentation
 
-## ## Requirements
+####Requirements
 
 - Python 3.x
 - NumPy

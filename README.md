@@ -19,12 +19,12 @@ project-root/
 │-- least_squares.py          # Computes least squares approximation
 │-- README.md                 # Project documentation
 
-####Requirements
+## Requirements
 
 - Python 3.x
 - NumPy
 
-## ## Installation
+## Installation
 
 Clone the repository and install dependencies:
 pip install numpy
@@ -32,7 +32,7 @@ pip install numpy
 
 ## Usage
 
-### Parsing Temperature Data 
+## Parsing Temperature Data 
 
 Run the main script with an input data file:
 python parse_temps_demo.py inputData/sample_temperature_data.tx
@@ -44,7 +44,7 @@ This will:
 2. Perform interpolation and least squares approximation.
 3. Save processed data into `outputData/`.
 
-### Interpolation Module
+## Interpolation Module
 from interpolation import perform_piecewise_linear_interpolation
 
 timestamps = [0, 30, 60, 90]
@@ -53,7 +53,7 @@ interpolated_equations = perform_piecewise_linear_interpolation(timestamps, temp
 for equation in interpolated_equations:
     print(equation)
 
-###Least Squares Approximation Module
+## Least Squares Approximation Module
 from least_squares import compute_least_squares_coefficients
 
 timestamps = [0, 30, 60, 90]
@@ -74,7 +74,7 @@ Each file contains formatted interpolation and least squares equations:
 30 <= x < 60; y = 41.2345 + 0.6789x ; interpolation
 y = 39.8765 + 0.4321x ; least-squares
 
-#### Notes
+## Notes
 
 - Ensure the input data is formatted correctly before processing.
 - The project is modular for easy expansion.

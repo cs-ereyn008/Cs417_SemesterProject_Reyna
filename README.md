@@ -4,7 +4,8 @@
 Emily Reyna
 Course: CS 417 - 23091
 Semester Project
-##Overview
+
+## Overview
 
 This project processes CPU temperature data using Python, performing piecewise linear interpolation and least squares approximation to analyze trends. The processed data is saved in structured output files for further analysis.
 

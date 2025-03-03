@@ -14,12 +14,12 @@ This project processes CPU temperature data using Python, performing piecewise l
 project-root/        
 │-- inputData/                # Contains raw temperature data files        
 │-- outputData/               # Stores processed output files per core        
+│-- README.md                 # Project documentation               
 │-- parse_temps.py            # Parses raw CPU temperature readings        
 │-- parse_temps_demo.py       # Main driver script for processing temperature data        
 │-- interpolation.py          # Implements piecewise linear interpolation        
 │-- least_squares.py          # Computes least squares approximation        
-│-- README.md                 # Project documentation        
-
+ 
 ## Requirements
 
 - Python 3.x

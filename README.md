@@ -11,7 +11,7 @@ This project processes CPU temperature data using Python, performing piecewise l
 
 ## Project Structure
 
-project-root/
+project-root/        
 │-- inputData/                # Contains raw temperature data files        
 │-- outputData/               # Stores processed output files per core        
 │-- parse_temps.py            # Parses raw CPU temperature readings        

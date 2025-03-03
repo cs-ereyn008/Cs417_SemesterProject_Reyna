@@ -1,4 +1,4 @@
-##CPU Temperature Analysis Project
+# CPU Temperature Analysis Project
 
 
 Emily Reyna

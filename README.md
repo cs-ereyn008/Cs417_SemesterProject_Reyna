@@ -72,10 +72,5 @@ Each file contains formatted interpolation and least squares equations:
 30 <= x < 60; y = 41.2345 + 0.6789x ; interpolation
 y = 39.8765 + 0.4321x ; least-squares
 
-## Notes
-
-- Ensure the input data is formatted correctly before processing.
-- The project is modular for easy expansion.
-
 
 

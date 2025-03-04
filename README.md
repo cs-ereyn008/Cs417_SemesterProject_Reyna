@@ -65,17 +65,6 @@ The interpolation module is responsible for performing piecewise linear interpol
 - Saves results to structured text files per core in `outputData/`.
 - Follows the `{basename}-core-{i}.txt` naming convention.
 
-```python
-from interpolation import perform_piecewise_linear_interpolation
-
-timestamps = [0, 30, 60, 90]
-temperatures = [40.0, 42.5, 43.0, 41.8]
-output_file = "outputData/sample_interpolation_output.txt"
-
-perform_piecewise_linear_interpolation(timestamps, temperatures, output_file)
-print(f"Interpolation results saved to {output_file}")
-```
-
 
 ## Least Squares Approximation Module (To be implemented)
 ```python

@@ -44,6 +44,7 @@ The `parse_raw_temps` function:
 - Uses a regex pattern to split and parse numerical values.
 - Outputs structured data as a tuple containing the timestamp and a list of core temperatures.
 
+## Main Driver
 Run the main script with an input data file:
 ```sh
 python parse_temps_demo.py inputData/sample_temperature_data.txt **Change the sample_temperature_data.txt file to match your file name** 

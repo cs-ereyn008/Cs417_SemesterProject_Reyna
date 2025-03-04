@@ -47,7 +47,7 @@ The `parse_raw_temps` function:
 ## Main Driver
 Run the main script with an input data file:
 ```sh
-python parse_temps_demo.py inputData/sample_temperature_data.txt **Change the sample_temperature_data.txt file to match your file name** 
+python parse_temps_demo.py inputData/sample_temperature_data.txt #Change the sample_temperature_data.txt file to match your file name
 ```
 
 This will:

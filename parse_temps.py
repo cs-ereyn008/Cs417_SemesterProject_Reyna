@@ -1,35 +1,56 @@
 #! /usr/bin/env python3
 
 """
-This module is a collection of input helpers for the CPU Temperatures Project.
-All code may be used freely in the semester project, iff it is imported using
-``import parse_temps`` or ``from parse_temps import {...}`` where ``{...}``
-represents one or more functions.
+Temperature Parsing File. 
+
+This file provides functionality to parse raw CPU temperature data, removing labels (+, °C), and creates a structured output.
+
+Sources:
+- String splitting and character cleaning based on W3Schools Python string methods: https://www.w3schools.com/python/ref_string_split.asp
+
+Author: Emily Reyna
+Course: CS 417 - Spring 2025
+Language: Python 3
 """
 
-import re
 from typing import Generator, TextIO
 
-
-def parse_raw_temps(
-    original_temps: TextIO, step_size: int = 30
-) -> Generator[tuple[float, list[float]], None, None]:
+def parse_raw_temps(original_temps: TextIO, has_labels: bool = False, step_size: int = 30) -> Generator[tuple[float, list[float]], None, None]:
     """
-    Take an input file and time-step size and parse all core temps.
+    Parse a raw temperature data file, optionally removing labels.
 
-    Args:
-        original_temps: an input file
-
-        step_size: time-step in seconds
-
-    Yields:
-        A tuple containing the next time step and a List containing _n_ core
-        temps as floating point values (where _n_ is the number of CPU cores)
+    :param original_temps: Opened input file containing raw temperature data.
+    :param has_labels: Flag indicating whether the input contains labels (+, °C).
+    :param step_size: Increment for each timestamp (default is 30 seconds).
+    :yield: Tuple containing timestamp and a list of core temperatures.
     """
+    timestamp = 0
+    for line_number, line in enumerate(original_temps, start=1):
+        line = line.strip()
+        if not line:
+            continue
 
-    split_re = re.compile(r"[^0-9]*\s+|[^0-9]*$")
+        if has_labels:
+            line = line.replace("+", "").replace("°C", "")
 
-    for step, line in enumerate(original_temps):
-        yield (step * step_size), [
-            float(entry) for entry in split_re.split(line) if len(entry) > 0
-        ]
+        entries = line.split()
+
+        # Clean each entry manually to remove non-numeric characters
+        cleaned_entries = []
+        for entry in entries:
+            cleaned_entry = ''.join(c for c in entry if (c.isdigit() or c == '.' or c == '-'))
+            if cleaned_entry:
+                cleaned_entries.append(cleaned_entry)
+
+        if len(cleaned_entries) != 4:
+            print(f"Warning: Skipping invalid line {line_number}: '{line}' (found {len(cleaned_entries)} entries)")
+            continue
+
+        try:
+            temperatures = [float(entry) for entry in cleaned_entries]
+        except ValueError:
+            print(f"Warning: Skipping invalid line {line_number}: '{line}' (non-numeric value found)")
+            continue
+
+        yield (timestamp, temperatures)
+        timestamp += step_size

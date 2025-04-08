@@ -49,7 +49,7 @@ The program reads temperature data from an input file, extracts numerical values
 ### Parsing Function
 The `parse_raw_temps` function:
 - Extracts CPU temperature readings at each timestep.
-- Uses a regex pattern to split and parse numerical values.
+- Uses a regex pattern to split and parse numerical values - this was changed due to unreadable characters appearing.
 - Outputs structured data as a tuple containing the timestamp and a list of core temperatures.
 
 ## Interpolation Module

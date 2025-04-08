@@ -25,18 +25,26 @@ project-root/
 ## Requirements
 
 - Python 3.x  
-- NumPy  
 
-## Installation
+## Running the Program
 
-Clone the repository and install dependencies:
+To run the program, use the following command from the project root directory:
+
 ```sh
-pip install numpy
+python parse_temps_demo.py inputData/sample_temperature_data.txt
 ```
+
+(Change `sample_temperature_data.txt` to match your input file name.)
+
+This will:
+
+1. Parse temperature readings.
+2. Perform piecewise linear interpolation and least squares approximation.
+3. Save processed data into the `outputData/` directory.
 
 ## Parsing Temperature Data
 
-The program reads temperature data from an input file, extracts numerical values, and processes core temperatures at regular time intervals. The extracted data is then used for interpolation and least squares approximation. The parser is designed to handle formatted sensor readings while ensuring compatibility with various input structures.
+The program reads temperature data from an input file, extracts numerical values, and processes core temperatures at regular time intervals. It is designed to handle formatted sensor readings, whether units are present or not.
 
 ### Parsing Function
 The `parse_raw_temps` function:
@@ -44,36 +52,54 @@ The `parse_raw_temps` function:
 - Uses a regex pattern to split and parse numerical values.
 - Outputs structured data as a tuple containing the timestamp and a list of core temperatures.
 
-## Main Driver
-Run the main script with an input data file:
-```sh
-python parse_temps_demo.py inputData/sample_temperature_data.txt #Change the sample_temperature_data.txt file to match your file name
-```
-
-This will:
-
-1. Parse temperature readings.
-2. Perform interpolation and least squares approximation.
-3. Save processed data into `outputData/`.
-
 ## Interpolation Module
 
-The interpolation module is responsible for performing piecewise linear interpolation on parsed temperature data. It computes interpolation equations for different time intervals and saves the results to structured text files for further analysis.
+The interpolation module is responsible for performing piecewise linear interpolation on parsed temperature data.
 
 ### Interpolation Function Behavior:
-- Processes time-series temperature data by computing linear interpolation equations.
+- Processes time-series temperature data by computing linear interpolation equations between consecutive points.
 - Formats output to align equations properly for readability.
 - Saves results to structured text files per core in `outputData/`.
-- Follows the `{basename}-core-{i}.txt` naming convention.
+- Files follow the `{basename}-core-{i}.txt` naming convention.
 
+Example usage:
 
-## Least Squares Approximation Module (To be implemented)
+```python
+from interpolation import perform_piecewise_linear_interpolation
+
+timestamps = [0, 30, 60, 90]
+temperatures = [40.0, 42.5, 43.0, 41.8]
+output_file = "outputData/sample_interpolation_output.txt"
+
+perform_piecewise_linear_interpolation(timestamps, temperatures, output_file)
+```
+
+The function will write the formatted interpolation equations directly to the output file.
+
+## Least Squares Approximation Module
+
+The least squares module computes the best-fit linear approximation across all data points.
+
+### Least Squares Function Behavior:
+- Computes the slope and intercept for the best-fit line.
+- Returns a formatted string representing the least squares equation.
+
+Example usage:
+
 ```python
 from least_squares import compute_least_squares_coefficients
 
 timestamps = [0, 30, 60, 90]
 temperatures = [40.0, 42.5, 43.0, 41.8]
-print(compute_least_squares_coefficients(timestamps, temperatures))
+
+equation = compute_least_squares_coefficients(timestamps, temperatures)
+print(equation)
+```
+
+This will output a string such as:
+
+```
+y = 40.1234 + 0.0567x
 ```
 
 ## Output Format
@@ -87,7 +113,7 @@ outputData/sample_temperature_data-core-3.txt
 
 Each file contains formatted interpolation and least squares equations:
 ```
- 0  <= x <=  30   ;   y =  40.1234    +   0.5678 x   ; interpolation
-30  <= x <=  60   ;   y =  41.2345    +   0.6789 x   ; interpolation
-y =  39.8765    +   0.4321 x   ; least-squares
+0     <= x <= 30   ; y =   40.1234 +   0.5678 x ; interpolation
+30    <= x <= 60   ; y =   41.2345 +   0.6789 x ; interpolation
+0 <= x <= 90      ; y =   39.8765 +   0.4321 x ; least-squares
 ```

@@ -1,53 +1,37 @@
 #! /usr/bin/env python3
 
 """
-Interpolation Module for CPU Temperature Analysis.
+Piecewise Linear Interpolation Module.
 
-This module provides functions to perform piecewise linear interpolation
-on parsed temperature data and saves output to text files.
+This module generates piecewise linear interpolation equations from parsed CPU temperature data.
+
+Sources:
+- Concepts based on CS417 Approximation Methods notes, Professor T. Kennedy,
+  https://www.cs.odu.edu/~tkennedy/cs417/latest/Public/approximationWhirlwindIntroduction/index.html
+
 """
 
-import os
 from typing import List
 
-def perform_piecewise_linear_interpolation(timestamps: List[float], temperatures: List[float], output_file: str):
+def perform_piecewise_linear_interpolation(timestamps: List[float], temperatures: List[float], output_file: str) -> None:
     """
-    Perform piecewise linear interpolation on given data points and save the results to a file.
+    Perform piecewise linear interpolation and write equations to a file.
 
-    Args:
-        timestamps (List[float]): The x-coordinates (time values).
-        temperatures (List[float]): The y-coordinates (temperature readings).
-        output_file (str): Path to the output file where the results will be saved.
+    :param timestamps: List of x-coordinate values (time values).
+    :param temperatures: List of y-coordinate values (temperature readings).
+    :param output_file: Path to the output file for interpolation results.
+    :raises ValueError: If input lists are of different lengths or contain fewer than two points.
     """
     if len(timestamps) != len(temperatures) or len(timestamps) < 2:
         raise ValueError("Timestamps and temperatures must have the same length and at least two points.")
 
     with open(output_file, "w") as file:
         for i in range(len(timestamps) - 1):
-            x_k, x_k1 = timestamps[i], timestamps[i + 1]
-            y_k, y_k1 = temperatures[i], temperatures[i + 1]
+            x0, x1 = timestamps[i], timestamps[i + 1]
+            y0, y1 = temperatures[i], temperatures[i + 1]
 
-            # Compute slope and intercept
-            slope = (y_k1 - y_k) / (x_k1 - x_k)
-            intercept = y_k - slope * x_k
+            slope = (y1 - y0) / (x1 - x0)
+            intercept = y0 - slope * x0
 
-            # Format the interpolation equation with better spacing for alignment
-            equation = f"{x_k:5}  <= x <=  {x_k1:5}  ;   y = {intercept:10.4f}    +   {slope:10.4f} x   ; interpolation"
+            equation = f"{int(x0):<5} <= x <= {int(x1):<5}; y = {intercept:8.4f} + {slope:8.4f} x ; interpolation"
             file.write(equation + "\n")
-
-    print(f"Interpolation results saved to: {output_file}")
-
-if __name__ == "__main__":
-    """
-    Example usage for testing the interpolation function.
-    """
-    sample_timestamps = [0, 30, 60, 90]
-    sample_temperatures = [40.0, 42.5, 43.0, 41.8]
-    output_file = "outputData/sample_interpolation_output.txt"
-
-    if not os.path.exists("outputData"):
-        os.makedirs("outputData")
-    
-    perform_piecewise_linear_interpolation(sample_timestamps, sample_temperatures, output_file)
-    print(f"Interpolation results saved to {output_file}")
-    
